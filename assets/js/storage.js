@@ -37,3 +37,12 @@ async function getItem(key) {
 //     const url =`${URL}?key=${key}&token=${STORAGE_TOKEN}`;
 //     return fetch(url).then(res => res.json());
 // }
+
+
+
+
+/* DEMO DATA
+
+
+
+*/

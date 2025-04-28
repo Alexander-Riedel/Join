@@ -5,7 +5,8 @@ async function init() {
   renderContent();
   let main = document.querySelector('.main-container');
   main.style.opacity = "0";
-  await loadUserDataFromRemote();
+  // await loadUserDataFromRemote();
+  await loadUserDataFromBackend();
   getLoginFromLocal();
 }
 
@@ -22,6 +23,13 @@ async function loadUserDataFromRemote() {
     let users = newUserDataString[i];
     userData.push(users);
   }
+}
+
+/** New Backend */
+async function loadUserDataFromBackend() {
+  const response = await fetch('http://localhost:8000/api/users/');
+  const users = await response.json();
+  userData = users;
 }
 
 /**
@@ -71,24 +79,36 @@ function renderSignUp() {
  * @param {string} a - This is the color of which each user gets assigned one
  */
 async function userDataFromSignUp(a) {
-  let name = document.getElementById('name');
-  name = name.value;
+  let name = document.getElementById('name').value;
   let initials = getInitials(name);
-  let email = document.getElementById('email');
-  let password = document.getElementById('password-signup');
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password-signup').value;
   let color = a;
-  userData = [];
-  await loadUserDataFromRemote();
-  let users = {
-    'name': name,
-    'email': email.value,
-    'password': password.value,
-    'color': color,
-    'initials': initials,
+
+  const newUser = {
+    name: name,
+    email: email,
+    password: password,
+    color: color,
+    initials: initials,
   };
-  userData.push(users);
-  saveUserDataInRemote();
+
+  //userData.push(users);
+  // saveUserDataInRemote();
+  saveNewUserInBackend(newUser)
 }
+
+
+async function saveNewUserInBackend(newUser) {
+  await fetch('http://localhost:8000/api/users/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newUser)
+  });
+}
+
 
 /**
  * This function stores the user data in remote storage
@@ -117,11 +137,11 @@ function setColor() {
  */
 function signUpUser() {
   let registerEmail = document.getElementById('email').value;
- let passwordsMatch = passwordCheck();
+  let passwordsMatch = passwordCheck();
   if (passwordsMatch) {
     emailCheck(registerEmail);
     let color = setColor();
-    userDataFromSignUp(color); 
+    userDataFromSignUp(color);
     displayMessage('You registered successfully!');
     setTimeout(() => {
       window.location.href = 'index.html';

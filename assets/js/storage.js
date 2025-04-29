@@ -1,15 +1,20 @@
-const URL = 'http://localhost:8000/api/item'; // neuer eigener Server!
+// const STORAGE_TOKEN = 'I6UE37M81WPHG1CYOP17O5XNIFP9VCIPG0GVDZE8';
+const URL = 'http://localhost:8000/item/';
 
 async function setItem(key, value) {
     const payload = { key, value };
-    return fetch(URL, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } })
-        .then(res => res.json());
+    return fetch(URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(res => res.json());
 }
 
 async function getItem(key) {
-    const url = `${URL}/get/?key=${key}`;
+    const url = `${URL}?key=${key}`;
     return fetch(url).then(res => res.json());
 }
+
 
 
 // const STORAGE_TOKEN = 'I6UE37M81WPHG1CYOP17O5XNIFP9VCIPG0GVDZE8';

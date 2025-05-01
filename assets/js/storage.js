@@ -8,13 +8,7 @@ const URL = 'http://localhost:8000/api/item';
  */
 async function setItem(key, value) {
     const payload = { key, value };
-    return fetch(URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'  // ⬅️ Wichtig!
-        },
-        body: JSON.stringify(payload)
-    }).then(res => res.json());
+    return fetch(URL, { method: 'POST', body: JSON.stringify(payload) }).then(res => res.json());
 }
 
 /**

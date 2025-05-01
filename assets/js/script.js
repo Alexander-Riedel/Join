@@ -17,6 +17,7 @@ async function init() {
  */
 async function loadUserDataFromRemote() {
   let newUserDataString = await getItem('users');
+  console.log(newUserDataString);
   newUserDataString = JSON.parse(newUserDataString['data']['value']);
   for (let i = 0; i < newUserDataString.length; i++) {
     let users = newUserDataString[i];

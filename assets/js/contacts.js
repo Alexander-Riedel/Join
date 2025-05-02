@@ -231,9 +231,9 @@ async function pushContactInfo() {
   let initials = getContactInitials(name);
   let color = getContactColor()
   let newContact = {
-    name: `${name}`,
-    email: `${email.value}`,
-    "phone-number": `${phoneNumber.value}`,
+    'name': name,
+    'email': email.value,
+    'phone-number': phoneNumber.value,
     'initials': initials,
     'color': color,
   };
@@ -413,7 +413,7 @@ function successfullyMove() {
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 async function setItemsInRemoteStorage() {
-  await setItem('contacts', contacts);
+  await setItem('contacts', JSON.stringify(contacts));
 }
 
 /**
